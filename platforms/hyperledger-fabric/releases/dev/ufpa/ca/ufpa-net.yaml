@@ -1,0 +1,57 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ufpa-net-ca
+  namespace: ufpa-net
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  interval: 1m
+  releaseName: ufpa-net-ca
+  chart:
+    spec:
+      interval: 1m
+      sourceRef:
+        kind: GitRepository
+        name: flux-local
+        namespace: flux-local
+      chart: platforms/hyperledger-fabric/charts/fabric-ca-server   
+  values:
+    deployment:
+      annotations:
+    annotations:  
+      service:
+        - example1: example2
+      pvc:
+    metadata:
+      namespace: ufpa-net
+      images:
+        alpineutils: ghcr.io/hyperledger/bevel-alpine:latest
+        ca: ghcr.io/hyperledger/bevel-fabric-ca:1.4.8
+    server:
+      name: ca
+      tlsstatus: true
+      admin: ufpa-admin
+        
+    storage:
+      storageclassname: ufpa-bevel-storageclass
+      storagesize: 512Mi 
+    vault:
+      role: vault-role
+      address: http://10.0.2.15:8200
+      authpath: localufpa
+      secretcert: secretsv2/data/ufpa/ordererOrganizations/ufpa-net/ca?ca.ufpa-net-cert.pem
+      secretkey: secretsv2/data/ufpa/ordererOrganizations/ufpa-net/ca?ufpa-net-CA.key
+      secretadminpass: secretsv2/data/ufpa/credentials/ufpa-net/ca/ufpa?user
+      serviceaccountname: vault-auth
+      type: hashicorp
+      imagesecretname: ""
+    service:
+      servicetype: ClusterIP
+      ports:
+        tcp:
+          clusteripport: 7054
+    proxy:
+      provider: none
+      type: orderer
+      external_url_suffix: develop.local.com
