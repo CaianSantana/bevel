@@ -1,0 +1,57 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: channel-ifba-allchannel
+  namespace: ifba-net
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  interval: 1m
+  releaseName: channel-ifba-allchannel
+  chart:
+    spec:
+      interval: 1m
+      sourceRef:
+        kind: GitRepository
+        name: flux-local
+        namespace: flux-local
+      chart: platforms/hyperledger-fabric/charts/fabric-channel-create   
+  values:
+    metadata:
+      namespace: ifba-net
+      network:
+        version: 2.2.2
+      images:
+        fabrictools: ghcr.io/hyperledger/bevel-fabric-tools:2.2.2
+        alpineutils: ghcr.io/hyperledger/bevel-alpine:latest
+
+    peer:
+      name: peer0
+      address: peer0.ifba-net:7051
+      localmspid: ifbaMSP
+      loglevel: debug
+      tlsstatus: true
+
+    vault:
+      role: vault-role
+      address: http://10.0.2.15:8200
+      authpath: localifba
+      adminsecretprefix: secretsv2/data/ifba/peerOrganizations/ifba-net/users/admin
+      orderersecretprefix: secretsv2/data/ifba/peerOrganizations/ifba-net/orderer 
+      serviceaccountname: vault-auth
+      type: hashicorp
+      imagesecretname: ""
+    
+    channel:
+      name: allchannel
+    orderer:
+      address: orderer1.ufpa-net:7050
+    channeltx: |-
+      CsMDChgKFggCGgYIg57VswYiCmFsbGNoYW5uZWwSpgMKowMKCmFsbGNoYW5uZWwSOxIpCgtBcHBs
+      aWNhdGlvbhIaEgsKB2lmYmFNU1ASABILCgd1ZnBpTVNQEgAaDgoKQ29uc29ydGl1bRIAGtcCEqsC
+      CgtBcHBsaWNhdGlvbhKbAggBEgsKB2lmYmFNU1ASABILCgd1ZnBpTVNQEgAaJAoMQ2FwYWJpbGl0
+      aWVzEhQSCgoICgRWMl8wEgAaBkFkbWlucyI1ChRMaWZlY3ljbGVFbmRvcnNlbWVudBIdEhMIAxIP
+      CgtFbmRvcnNlbWVudBACGgZBZG1pbnMiIgoHUmVhZGVycxIXEg0IAxIJCgdSZWFkZXJzGgZBZG1p
+      bnMiIgoHV3JpdGVycxIXEg0IAxIJCgdXcml0ZXJzGgZBZG1pbnMiIgoGQWRtaW5zEhgSDggDEgoK
+      BkFkbWlucxACGgZBZG1pbnMiLAoLRW5kb3JzZW1lbnQSHRITCAMSDwoLRW5kb3JzZW1lbnQQAhoG
+      QWRtaW5zKgZBZG1pbnMaJwoKQ29uc29ydGl1bRIZEhcKFVN1cHBseUNoYWluQ29uc29ydGl1bQ==
