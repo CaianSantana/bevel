@@ -1,0 +1,73 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ufpa-net-ca-tools
+  namespace: ufpa-net
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  interval: 1m
+  releaseName: ufpa-net-ca-tools
+  chart:
+    spec:
+      interval: 1m
+      sourceRef:
+        kind: GitRepository
+        name: flux-local
+        namespace: flux-local
+      chart: platforms/hyperledger-fabric/charts/fabric-catools
+  values:
+    metadata:
+      namespace: ufpa-net
+      name: ca-tools
+      component_type: orderer
+      org_name: ufpa
+      proxy: none
+    annotations:  
+      service:
+        - example1: example2
+      pvc:
+      deployment:
+    replicaCount: 1
+
+    image:
+      alpineutils: ghcr.io/hyperledger/bevel-alpine:latest
+      catools: ghcr.io/hyperledger/bevel-fabric-ca-tools:1.2.1
+      pullPolicy: IfNotPresent
+    
+    storage:
+      storageclassname: ufpa-bevel-storageclass
+      storagesize: 512Mi
+    
+    vault:
+      role: vault-role
+      address: http://10.0.2.15:8200
+      authpath: localufpa
+      secretusers: secretsv2/data/ufpa/ordererOrganizations/ufpa-net/users
+      secretorderer: secretsv2/data/ufpa/ordererOrganizations/ufpa-net/orderers
+      secretpeer: secretsv2/data/ufpa/ordererOrganizations/ufpa-net/peers
+      secretpeerorderertls: secretsv2/data/ufpa/ordererOrganizations/ufpa-net/orderer/tls
+      secretcert: secretsv2/data/ufpa/ordererOrganizations/ufpa-net/ca?ca.ufpa-net-cert.pem
+      secretkey: secretsv2/data/ufpa/ordererOrganizations/ufpa-net/ca?ufpa-net-CA.key
+      secretcouchdb: secretsv2/data/ufpa/credentials/ufpa-net/couchdb/ufpa
+      secretconfigfile: secretsv2/data/ufpa/ordererOrganizations/ufpa-net/msp/config
+      serviceaccountname: vault-auth
+      type: hashicorp
+      imagesecretname: ""
+    
+    healthcheck: 
+      retries: 10
+      sleepTimeAfterError: 2
+
+    
+    org_data:
+      external_url_suffix: develop.local.com
+      component_subject: O=Ufparderer,L=51.50/-0.13/London,C=GB
+      cert_subject: O=Ufparderer/L=51.50,-0.13,London/C=GB
+      component_country: UK
+      component_state: London
+      component_location: London
+      ca_url: ca.ufpa-net:7054
+
+    orderers:
+      name: orderer1-
