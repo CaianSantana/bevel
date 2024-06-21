@@ -1,0 +1,37 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ifba-cacerts-job
+  namespace: ifba-net
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  interval: 1m
+  releaseName: ifba-cacerts-job
+  chart:
+    spec:
+      interval: 1m
+      sourceRef:
+        kind: GitRepository
+        name: flux-local
+        namespace: flux-local
+      chart: platforms/hyperledger-fabric/charts/fabric-cacerts-gen
+  values:
+    metadata:
+      name: ifba
+      component_name: ifba-net
+      namespace: ifba-net    
+      images:
+       alpineutils: ghcr.io/hyperledger/bevel-alpine:latest
+    vault:
+      role: vault-role
+      address: http://10.0.2.15:8200
+      authpath: localifba
+      secretcryptoprefix: secretsv2/data/ifba/peerOrganizations/ifba-net/ca
+      secretcredentialsprefix: secretsv2/data/ifba/credentials/ifba-net/ca/ifba
+      serviceaccountname: vault-auth
+      type: hashicorp
+      imagesecretname: ""
+      
+    ca:
+      subject: /C=GB/ST=London/L=London/O=Ifba/CN=ca.ifba-net
