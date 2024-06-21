@@ -62,8 +62,8 @@ spec:
     
     org_data:
       external_url_suffix: develop.local.com
-      component_subject: O=Ufparderer,L=51.50/-0.13/London,C=GB
-      cert_subject: O=Ufparderer/L=51.50,-0.13,London/C=GB
+      component_subject: O=Ufpa,L=51.50/-0.13/London,C=GB
+      cert_subject: O=Ufpa/L=51.50,-0.13,London/C=GB
       component_country: UK
       component_state: London
       component_location: London
