@@ -1,0 +1,44 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: peer0-ufpi-cli
+  namespace: ufpi-net
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  interval: 1m
+  releaseName: peer0-ufpi-cli
+  chart:
+    spec:
+      interval: 1m
+      sourceRef:
+        kind: GitRepository
+        name: flux-local
+        namespace: flux-local
+      chart: platforms/hyperledger-fabric/charts/fabric-cli    
+  values:
+    metadata:
+      namespace: ufpi-net
+      images:
+        fabrictools: ghcr.io/hyperledger/bevel-fabric-tools:2.2.2
+        alpineutils: ghcr.io/hyperledger/bevel-alpine:latest
+    storage:
+      class: ufpi-bevel-storageclass
+      size: 256Mi
+    vault:
+      role: vault-role
+      address: http://10.0.2.15:8200
+      authpath: localufpi
+      adminsecretprefix: secretsv2/data/ufpi/peerOrganizations/ufpi-net/users/admin
+      orderersecretprefix: secretsv2/data/ufpi/peerOrganizations/ufpi-net/orderer
+      serviceaccountname: vault-auth
+      type: hashicorp
+      imagesecretname: ""
+      tls: false
+    peer:
+      name: peer0
+      localmspid: ufpiMSP
+      tlsstatus: true
+      address: peer0.ufpi-net:7051
+    orderer:
+      address: orderer1.ufpa-net:7050
