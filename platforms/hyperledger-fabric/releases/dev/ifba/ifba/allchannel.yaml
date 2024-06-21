@@ -47,11 +47,11 @@ spec:
     orderer:
       address: orderer1.ufpa-net:7050
     channeltx: |-
-      CsMDChgKFggCGgYIyLbTswYiCmFsbGNoYW5uZWwSpgMKowMKCmFsbGNoYW5uZWwSOxIpCgtBcHBs
-      aWNhdGlvbhIaEgsKB2lmYmFNU1ASABILCgd1ZnBpTVNQEgAaDgoKQ29uc29ydGl1bRIAGtcCEqsC
-      CgtBcHBsaWNhdGlvbhKbAggBEgsKB3VmcGlNU1ASABILCgdpZmJhTVNQEgAaJAoMQ2FwYWJpbGl0
-      aWVzEhQSCgoICgRWMl8wEgAaBkFkbWlucyIiCgdXcml0ZXJzEhcSDQgDEgkKB1dyaXRlcnMaBkFk
-      bWlucyIiCgZBZG1pbnMSGBIOCAMSCgoGQWRtaW5zEAIaBkFkbWlucyIsCgtFbmRvcnNlbWVudBId
-      EhMIAxIPCgtFbmRvcnNlbWVudBACGgZBZG1pbnMiNQoUTGlmZWN5Y2xlRW5kb3JzZW1lbnQSHRIT
-      CAMSDwoLRW5kb3JzZW1lbnQQAhoGQWRtaW5zIiIKB1JlYWRlcnMSFxINCAMSCQoHUmVhZGVycxoG
+      CsMDChgKFggCGgYIwNXTswYiCmFsbGNoYW5uZWwSpgMKowMKCmFsbGNoYW5uZWwSOxIpCgtBcHBs
+      aWNhdGlvbhIaEgsKB3VmcGlNU1ASABILCgdpZmJhTVNQEgAaDgoKQ29uc29ydGl1bRIAGtcCEqsC
+      CgtBcHBsaWNhdGlvbhKbAggBEgsKB2lmYmFNU1ASABILCgd1ZnBpTVNQEgAaJAoMQ2FwYWJpbGl0
+      aWVzEhQSCgoICgRWMl8wEgAaBkFkbWlucyIiCgdSZWFkZXJzEhcSDQgDEgkKB1JlYWRlcnMaBkFk
+      bWlucyIiCgdXcml0ZXJzEhcSDQgDEgkKB1dyaXRlcnMaBkFkbWlucyIiCgZBZG1pbnMSGBIOCAMS
+      CgoGQWRtaW5zEAIaBkFkbWlucyIsCgtFbmRvcnNlbWVudBIdEhMIAxIPCgtFbmRvcnNlbWVudBAC
+      GgZBZG1pbnMiNQoUTGlmZWN5Y2xlRW5kb3JzZW1lbnQSHRITCAMSDwoLRW5kb3JzZW1lbnQQAhoG
       QWRtaW5zKgZBZG1pbnMaJwoKQ29uc29ydGl1bRIZEhcKFVN1cHBseUNoYWluQ29uc29ydGl1bQ==
