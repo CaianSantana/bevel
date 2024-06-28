@@ -1,0 +1,57 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: anchorpeer-allchannel-ufteste
+  namespace: ufteste-net
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  interval: 1m
+  releaseName: anchorpeer-allchannel-ufteste
+  chart:
+    spec:
+      interval: 1m
+      sourceRef:
+        kind: GitRepository
+        name: flux-local
+        namespace: flux-local
+      chart: platforms/hyperledger-fabric/charts/fabric-anchorpeer
+  values:
+    metadata:
+      namespace: ufteste-net
+      network:
+        version: 2.2.2
+      images:
+        fabrictools: ghcr.io/hyperledger/bevel-fabric-tools:2.2.2
+        alpineutils: ghcr.io/hyperledger/bevel-alpine:latest
+
+    peer:
+      name: peer0
+      address: peer0.ufteste-net:7051
+      localmspid: uftesteMSP
+      loglevel: debug
+      tlsstatus: true
+
+    vault:
+      role: vault-role
+      address: http://10.0.2.15:8200
+      authpath: localufteste
+      adminsecretprefix: secretsv2/data/ufteste/peerOrganizations/ufteste-net/users/admin
+      orderersecretprefix: secretsv2/data/ufteste/peerOrganizations/ufteste-net/orderer
+      serviceaccountname: vault-auth
+      type: hashicorp
+      imagesecretname: ""
+      
+
+    channel:
+      name: allchannel      
+    orderer:
+      address: orderer1.ufpa-net:7050
+    anchorstx: |-
+      CrcCChgKFggCGgYI9av8swYiCmFsbGNoYW5uZWwSmgIKlwIKCmFsbGNoYW5uZWwSYxJhCgtBcHBs
+      aWNhdGlvbhJSCAESTgoKdWZ0ZXN0ZU1TUBJAGgcKA01TUBIAIgsKB1dyaXRlcnMSACIKCgZBZG1p
+      bnMSACIPCgtFbmRvcnNlbWVudBIAIgsKB1JlYWRlcnMSABqjARKgAQoLQXBwbGljYXRpb24SkAEI
+      ARKLAQoKdWZ0ZXN0ZU1TUBJ9CAEaBwoDTVNQEgAaMQoLQW5jaG9yUGVlcnMSIhIYChYKEXBlZXIw
+      LnVmdGVzdGUtbmV0EIs3GgZBZG1pbnMiCgoGQWRtaW5zEgAiDwoLRW5kb3JzZW1lbnQSACILCgdS
+      ZWFkZXJzEgAiCwoHV3JpdGVycxIAKgZBZG1pbnM=
+
