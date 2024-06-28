@@ -1,0 +1,86 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ufteste-net-ca-tools
+  namespace: ufteste-net
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  interval: 1m
+  releaseName: ufteste-net-ca-tools
+  chart:
+    spec:
+      interval: 1m
+      sourceRef:
+        kind: GitRepository
+        name: flux-local
+        namespace: flux-local
+      chart: platforms/hyperledger-fabric/charts/fabric-catools
+  values:
+    metadata:
+      namespace: ufteste-net
+      name: ca-tools
+      component_type: peer
+      org_name: ufteste
+      proxy: none
+    annotations:  
+      service:
+        - example1: example2
+      pvc:
+      deployment:
+    replicaCount: 1
+
+    image:
+      alpineutils: ghcr.io/hyperledger/bevel-alpine:latest
+      catools: ghcr.io/hyperledger/bevel-fabric-ca-tools:1.2.1
+      pullPolicy: IfNotPresent
+    
+    storage:
+      storageclassname: ufteste-bevel-storageclass
+      storagesize: 512Mi
+    
+    vault:
+      role: vault-role
+      address: http://10.0.2.15:8200
+      authpath: localufteste
+      secretusers: secretsv2/data/ufteste/peerOrganizations/ufteste-net/users
+      secretorderer: secretsv2/data/ufteste/peerOrganizations/ufteste-net/orderers
+      secretpeer: secretsv2/data/ufteste/peerOrganizations/ufteste-net/peers
+      secretpeerorderertls: secretsv2/data/ufteste/peerOrganizations/ufteste-net/orderer/tls
+      secretcert: secretsv2/data/ufteste/peerOrganizations/ufteste-net/ca?ca.ufteste-net-cert.pem
+      secretkey: secretsv2/data/ufteste/peerOrganizations/ufteste-net/ca?ufteste-net-CA.key
+      secretcouchdb: secretsv2/data/ufteste/credentials/ufteste-net/couchdb/ufteste
+      secretconfigfile: secretsv2/data/ufteste/peerOrganizations/ufteste-net/msp/config
+      serviceaccountname: vault-auth
+      type: hashicorp
+      imagesecretname: ""
+    
+    healthcheck: 
+      retries: 10
+      sleepTimeAfterError: 2
+
+    
+    org_data:
+      external_url_suffix: develop.local.com
+      component_subject: O=Ufteste,OU=Ufteste,L=47.35/8.53/Zurich,C=CH
+      cert_subject: O=Ufteste/OU=Ufteste/L=47.35,8.53,Zurich/C=CH
+      component_country: CH
+      component_state: Zurich
+      component_location: Zurich
+      ca_url: ca.ufteste-net:7054
+
+    orderers:
+      name: orderer1-
+    orderers_info:
+      - name: orderer1
+        path: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUI3RENDQVpLZ0F3SUJBZ0lVUXJNdWEzTjZhNHo1ZHRnRjEzQXBQeVREeENvd0NnWUlLb1pJemowRUF3SXcKVkRFTE1Ba0dBMVVFQmhNQ1IwSXhEekFOQmdOVkJBZ01Ca3h2Ym1SdmJqRVBNQTBHQTFVRUJ3d0dURzl1Wkc5dQpNUTB3Q3dZRFZRUUtEQVJWWm5CaE1SUXdFZ1lEVlFRRERBdGpZUzUxWm5CaExXNWxkREFlRncweU5EQTJNakV3Ck9UUXdNakphRncweU56QTBNVEV3T1RRd01qSmFNRlF4Q3pBSkJnTlZCQVlUQWtkQ01ROHdEUVlEVlFRSURBWk0KYjI1a2IyNHhEekFOQmdOVkJBY01Ca3h2Ym1SdmJqRU5NQXNHQTFVRUNnd0VWV1p3WVRFVU1CSUdBMVVFQXd3TApZMkV1ZFdad1lTMXVaWFF3V1RBVEJnY3Foa2pPUFFJQkJnZ3Foa2pPUFFNQkJ3TkNBQVQ5dXd3aFY3TVI4WFRoCk1PbVZBV1N1Kzg5NDFxbjBJaXhrd3NseS9QKzIyTlVDUm44ZGtsVXdFOWVuMzRSejUxRTkxK0RnTWFYOERzN2YKVE94dUdYcTVvMEl3UURBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUE0R0ExVWREd0VCL3dRRUF3SUJwakFkQmdOVgpIUTRFRmdRVUNNMm43b1pSdjBIUzRTS01wdXhlL21JdlU0MHdDZ1lJS29aSXpqMEVBd0lEU0FBd1JRSWhBTTQyClVSa3FUUFNsMlRqSm4vdW9kWnRIbDlBcndOZHlXRkd6WHRTb3oxNStBaUFLUDVHL241RUx5TkRQaXUzVjVBSi8KTzlUZmMzUThzLytrQWw4c0dkSisvUT09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0="
+
+    peers:
+      name: peer0,-      
+    peer_count: "1"
+    users: 
+      users_list: "W3sndXNlcic6IE5vbmUsICdpZGVudGl0eSc6ICd1c2VyMScsICdhdHRyaWJ1dGVzJzogW3sna2V5JzogJ2hmLlJldm9rZXInLCAndmFsdWUnOiAndHJ1ZSd9XX1d"
+      users_identities: user1-
+    checks:
+      refresh_cert_value: False
+      add_peer_value: False
