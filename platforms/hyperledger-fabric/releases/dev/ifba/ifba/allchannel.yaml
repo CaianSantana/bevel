@@ -47,11 +47,11 @@ spec:
     orderer:
       address: orderer1.ufpa-net:7050
     channeltx: |-
-      CsMDChgKFggCGgYIp8PVswYiCmFsbGNoYW5uZWwSpgMKowMKCmFsbGNoYW5uZWwSOxIpCgtBcHBs
+      CsMDChgKFggCGgYI85r7swYiCmFsbGNoYW5uZWwSpgMKowMKCmFsbGNoYW5uZWwSOxIpCgtBcHBs
       aWNhdGlvbhIaEgsKB2lmYmFNU1ASABILCgd1ZnBpTVNQEgAaDgoKQ29uc29ydGl1bRIAGtcCEqsC
       CgtBcHBsaWNhdGlvbhKbAggBEgsKB2lmYmFNU1ASABILCgd1ZnBpTVNQEgAaJAoMQ2FwYWJpbGl0
-      aWVzEhQSCgoICgRWMl8wEgAaBkFkbWlucyI1ChRMaWZlY3ljbGVFbmRvcnNlbWVudBIdEhMIAxIP
-      CgtFbmRvcnNlbWVudBACGgZBZG1pbnMiIgoHUmVhZGVycxIXEg0IAxIJCgdSZWFkZXJzGgZBZG1p
-      bnMiIgoHV3JpdGVycxIXEg0IAxIJCgdXcml0ZXJzGgZBZG1pbnMiIgoGQWRtaW5zEhgSDggDEgoK
-      BkFkbWlucxACGgZBZG1pbnMiLAoLRW5kb3JzZW1lbnQSHRITCAMSDwoLRW5kb3JzZW1lbnQQAhoG
+      aWVzEhQSCgoICgRWMl8wEgAaBkFkbWlucyIiCgZBZG1pbnMSGBIOCAMSCgoGQWRtaW5zEAIaBkFk
+      bWlucyIsCgtFbmRvcnNlbWVudBIdEhMIAxIPCgtFbmRvcnNlbWVudBACGgZBZG1pbnMiNQoUTGlm
+      ZWN5Y2xlRW5kb3JzZW1lbnQSHRITCAMSDwoLRW5kb3JzZW1lbnQQAhoGQWRtaW5zIiIKB1JlYWRl
+      cnMSFxINCAMSCQoHUmVhZGVycxoGQWRtaW5zIiIKB1dyaXRlcnMSFxINCAMSCQoHV3JpdGVycxoG
       QWRtaW5zKgZBZG1pbnMaJwoKQ29uc29ydGl1bRIZEhcKFVN1cHBseUNoYWluQ29uc29ydGl1bQ==
